@@ -1,14 +1,17 @@
 # Copyright (c) 2023 [Victoria Gong]
 # Licensed under the MIT License (see LICENSE for details)
 
-def strategy_analysis(price_data, tx_data):
+def strategy_analysis(
+    price_data: dict,
+    tx_data: dict,
+):
     """
     Placeholder for off-chain strategy analysis.
     Inputs:
-        - price_data: Flare FTSO price data (dict)
-        - tx_data: On-chain transaction data (dict)
+        :param price_data: Flare FTSO price data (dict)
+        :param tx_data: On-chain transaction data (dict)
     Outputs:
-        - trade_signal: Dict containing trade details (e.g., tokenIn, tokenOut, amountIn, amountOutMin)
+        :returns trade_signal: Dict containing trade details (e.g., tokenIn, tokenOut, amountIn, amountOutMin)
     """
     # Example logic: Buy if price is below a threshold
     threshold_price = 50  # Example threshold

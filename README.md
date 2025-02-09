@@ -24,10 +24,13 @@ The model's purpose is to:
 ```
 web3-dapp/
 ├── contracts/                     # Solidity smart contracts
-│   ├── TradeVerifier.sol          # Flare FTSO price verification
-│   ├── TradeExecutor.sol          # AirSwap or LFG trade execution
+│   ├── TradeVerifierFlare.sol     # Flare FTSO price verification
+│   ├── TradeVerifierUniV3.sol     # Flare FTSO price verification
+│   ├── TradeExecutorAvalanche.sol # AirSwap or LFG trade execution
+│   ├── TradeExecutorLFG.sol       # AirSwap or LFG trade execution
 ├── scripts/                       # Python scripts for off-chain logic
 │   ├── fetch_data.py              # Fetch on-chain data
+│   ├── get_user_input.py          # Retrieves user input from frontend diagram for Exchange mapper
 │   ├── strategy_analysis.py       # Off-chain strategy analysis
 │   ├── deploy_contracts.py        # Deploy contracts
 │   ├── execute_trade.py           # Execute trade
