@@ -1,15 +1,20 @@
-import httpx, requests
+import httpx
+import requests
 import json
+import asyncio
 from typing import Dict, Optional
 from datetime import datetime
-import asyncio
+from .response_format import response_schema
+
 
 class GraphClient:
     def __init__(
         self,
         base_url: str = "{}/api/python-graph",
         domain_: str = "http://localhost:3000",
+        response_dict: Dict = response_schema,
     ):
+        self.json_response = response_dict
         self.base_url = base_url
         self.domain = domain_
         self.endpoint = self.base_url.format(self.domain)
@@ -18,13 +23,19 @@ class GraphClient:
         self,
         
     ):
+        """
+
+        :return:
+        """
         try:
             response = requests.post(
                 self.endpoint
             )
             if response.status_code == 200:
                 data = response.json()
-                return data['data']
+                self.json_response['data'].update(data['data'])
+                print(f'Graph data received: Success')
+                return self.json_response
             else:
                 print(
                     f"Error: {response.status_code}"
@@ -37,7 +48,10 @@ class GraphClient:
             return None
     
     
-    async def send_graph_data(self, graph_data: Dict) -> Dict:
+    async def send_graph_data(
+        self,
+        graph_data: Dict,
+    ) -> Dict:
         """
         Send graph data to the API endpoint using httpx.
         
@@ -71,33 +85,46 @@ class GraphClient:
             print(f"Unexpected error: {e}")
             raise
 
-# Example usage
-async def main():
-    # Create sample graph data
-    sample_data = {
-        "nodes": [
-            {
-                "id": "node-1",
-                "type": "circle",
-                "position": {"x": 100, "y": 200},
-                "data": {
-                    "tokenPair": "AVAX/USDT",
-                    "tradeType": "Buy",
-                    "tradeAmount": "1 AVAX",
-                    "slippageTolerance": "1%"
+
+async def main(
+    request_type: str = 'GET',
+    domain_: str = "http://localhost:3000",
+    
+):
+    if request_type.lower() == 'get':
+        client = GraphClient(
+            domain_="http://localhost:3000",
+            
+        )
+        graph_data = client.get_graph_data()
+        print(json.dumps(graph_data, indent=2))
+    else:
+        
+        # Create sample graph data
+        sample_data = {
+            "nodes": [
+                {
+                    "id": "node-1",
+                    "type": "circle",
+                    "position": {"x": 100, "y": 200},
+                    "data": {
+                        "tokenPair": "AVAX/USDT",
+                        "tradeType": "Buy",
+                        "tradeAmount": "1 AVAX",
+                        "slippageTolerance": "1%"
+                    }
                 }
-            }
-        ],
-        "connections": [
-            {
-                "id": "conn-1",
-                "sourceId": "node-1",
-                "targetId": None
-            }
-        ],
-        "version": "1.0",
-        "timestamp": int(datetime.now().timestamp())
-    }
+            ],
+            "connections": [
+                {
+                    "id": "conn-1",
+                    "sourceId": "node-1",
+                    "targetId": None
+                }
+            ],
+            "version": "1.0",
+            "timestamp": int(datetime.now().timestamp())
+        }
 
     client = GraphClient()
     try:
