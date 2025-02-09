@@ -25,10 +25,14 @@ The model's purpose is to:
 web3-dapp/
 ├── contracts/                     # Solidity smart contracts
 │   ├── TradeVerifierFlare.sol     # Flare FTSO price verification
-│   ├── TradeVerifierUniV3.sol     # Flare FTSO price verification
-│   ├── TradeExecutorAvalanche.sol # AirSwap or LFG trade execution
-│   ├── TradeExecutorLFG.sol       # AirSwap or LFG trade execution
+│   ├── TradeVerifierUniV3.sol     # Flare UniSwapV3 price verification
+│   ├── TradeExecutorAvalanche.sol # AirSwap trade execution
+│   ├── TradeExecutorLFG.sol       # LFG trade execution
 ├── scripts/                       # Python scripts for off-chain logic
+│   ├── frontendAPI/               # Communites with the frontend and integrates a user generated input for the Exchange Mapper and trade execution
+│   │   ├── examples/*             # Examples of frontend API usage
+│   │   ├── graph_client.py        # GraphClient frontend class 
+│   │   ├── post_spec.md           # Overview of the frontend usage 
 │   ├── fetch_data.py              # Fetch on-chain data
 │   ├── get_user_input.py          # Retrieves user input from frontend diagram for Exchange mapper
 │   ├── strategy_analysis.py       # Off-chain strategy analysis
@@ -151,6 +155,13 @@ cd web3-dapp
    ```
 
 ---
+## **Disclaimer**
+This is a product used as a demo use case of a low-code AI platform, that uses the metadata of a diagrammatic representation from a frontend API to produce the desired on-chain and off-chain functionalities. 
+
+Whilst the cross-chain **method** used to call on-chain data for off-chain analysis, and cross-chain execution incorporates validation and verification steps, it is unadvised to attempt to execute this. The strategy analysis model is not financial advice, not backtested, and should not be used for real trading. AI alone should not be used for smart contract creation.
+
+Always do your own research before making any investment/deployment actions.
+
 
 ## **Contributing**
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
