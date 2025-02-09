@@ -2,6 +2,7 @@
 # Licensed under the MIT License (see LICENSE for details)
 
 def strategy_analysis(
+    input_model_dict: dict,
     price_data: dict,
     tx_data: dict,
 ):

@@ -4,6 +4,7 @@
 import json
 from web3 import Web3
 from solcx import compile_standard, install_solc
+from global_vars_ import *
 
 # Load private key and Infura project ID
 with open("./config/secrets.json", "r") as f:
@@ -19,19 +20,19 @@ account_address = w3.eth.account.from_key(private_key).address
 solidity_contracts_mapper = {
     'AirSwapFlare': {
         'verifier_source': 'contracts/TradeVerifierFlare.sol',
-        'executor_source': 'contracts/TradeExecutorAirswap.sol',
+        'executor_source': 'contracts/TradeExecutorAvalanche.sol',
     },
     'UniV3LFJ': {
         'verifier_source': 'contracts/TradeVerifierUniV3.sol',
         'executor_source': 'contracts/TradeExecutorLFJ.sol',
-    }
+    },
 }
 # Install Solidity compiler
 install_solc("0.8.0")
 
 # Compile the Solidity contracts
 solidity_contracts = {}
-with open("contracts/TradeVerifierUniV3.sol", "r") as f:
+with open(solidity_contracts_mapper[DEFINED_CHAIN][''], "r") as f:
     solidity_contracts['UniV3LFJ']['verifier_source'] = f.read()
 
 with open("contracts/TradeVerifierFlare.sol", "r") as f:
@@ -40,7 +41,7 @@ with open("contracts/TradeVerifierFlare.sol", "r") as f:
 with open("contracts/TradeExecutorLFJ.sol", "r") as f:
     solidity_contracts['UniV3LFJ']['executor_source'] = f.read()
 
-with open("contracts/TradeExecutorAirswap.sol", "r") as f:
+with open("contracts/TradeExecutorAvalanche.sol", "r") as f:
     solidity_contracts['AirSwapFlare']['executor_source'] = f.read()
 
 

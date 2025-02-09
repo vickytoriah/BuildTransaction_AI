@@ -102,6 +102,9 @@ cd web3-dapp
    pip install py-solc-x
    ```
 
+### **4. Model Structure**
+
+
 ### **4. Configure Secrets**
 1. Create a `config/secrets.json` file:
    ```json

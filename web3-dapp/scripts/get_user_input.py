@@ -2,14 +2,14 @@
 # Licensed under the MIT License (see LICENSE for details)
 import requests
 import os
+from global_vars_ import *
 from dotenv import load_dotenv
 from web3 import Web3
 from frontendAPI.graph_client import GraphClient, main as main_
 from frontendAPI.response_format import response_schema
 from fetch_data import fetch_tx_data, fetch_flare_ftso_price, fetch_ethereum_tx
 
-# Load environment variables from .env file
-load_dotenv()
+global DEFINED_CHAIN
 
 # Access environment variables
 private_key = os.getenv("PRIVATE_KEY")
@@ -18,76 +18,12 @@ frontend_domain = os.getenv("FRONTEND_DOMAIN")
 frontend_base_url = os.getenv("FRONTEND_BASE_URL")
 
 
-tx_fetch_endpoints = {
-    'ETH_MAINNET': 'https://mainnet.infura.io/v3/{}',
-    'AVAX/USDT': 'https://api.avax.network/ext/bc/C/rpc',
-    'FLARE': "https://flare-api.com/ftso/{}/price",
-    'UNIV3': "https://api.solanabeach.io/v1/transactions/{}",
-}
-
-solidity_contracts_mapper = {
-    'AirSwapFlare': {
-        'verifier_source': 'contracts/TradeVerifierFlare.sol',
-        'executor_source': 'contracts/TradeExecutorAvalanche.sol',
-    },
-    'UniV3LFJ': {
-        'verifier_source': 'contracts/TradeVerifierUniV3.sol',
-        'executor_source': 'contracts/TradeExecutorLFJ.sol',
-    },
-}
-#
 # # Connect to Ethereum/Avalanche node
-# w3 = Web3(Web3.HTTPProvider())
+w3 = Web3(Web3.HTTPProvider(f"https://mainnet.infura.io/v3/{infura_project_id}"))
+chain_id = 1  # Ethereum Mainnet (use 43114 for Avalanche C-Chain)
 
-model_specifications = {
-    'infura_project_id': infura_project_id,
-    'eth_mainnet_url': tx_fetch_endpoints['ETH_MAINNET'],
-    'eth_method': 'eth_getTransactionByHash',
-    'AVAX/USDT': {
-        'tx_hash': '',
-        'model': {
-            'AirSwapFlare': {
-                solidity_contracts_mapper['AirSwapFlare'],
-            },
-        },
-        'tx_details': {
-            'tx_fetch_url': tx_fetch_endpoints['AVAX/USDT'],
-            'tx_fetch_price': tx_fetch_endpoints['FLARE'],
-        },
-    },
-    'SOL/USDC': {
-        'tx_hash': '',
-        'model': {
-            'UNIV3LFJ': {
-                solidity_contracts_mapper['UniV3LFJ'],
-            },
-        },
-        'tx_details': {
-            'tx_fetch_url': tx_fetch_endpoints['FLARE'],
-            'tx_fetch_price': tx_fetch_endpoints['UNIV3'],
-        }
-    }
-}
-
-default_payload_dict = {
-    "jsonrpc": "2.0",
-    "method": model_specifications['eth_method'],  # method function to call, e.g., eth_getTransactionByHash
-    "params": [],  # tx_hash of the token pair
-    "id": 1,
-}
-
-
-input_params = {
-    'tx_pair': 'AVAX/USDT' ,
-    'tx_hash': '',
-    'fetch_tx_dict': None,
-    'method_call': 'eth_getTransactionByHash',
-    'payload_': default_payload_dict,
-    'url_': tx_fetch_endpoints['avax_tx'],
-}
 
 # Get User input
-# todo: finish this function and optimize the imports across the project
 def get_user_input(
     frontend_API: str = frontend_base_url,
     frontend_domain: str = frontend_domain,
@@ -120,15 +56,25 @@ def get_user_input(
     )
     if response_dict is not None:
         token_pair = response_dict['data']['nodes']['data']['tokenPair']
-        # if 'avax' or 'avalanche' in token_pair.lower():
-            # token_pair = 'AVAX/USDT':
+        
         model_to_implement['model'].update(model_specifications_dict_[token_pair]['model'])
-    
+        global DEFINED_CHAIN
+        DEFINED_CHAIN = model_to_implement['model'].keys()[0]
     model_specs = fetch_tx_details(
         input_dict_params=model_to_implement,
         token_pair_=token_pair,
     )
     return model_specs
+
+def modify_global_chain(
+    new_value: str,
+):
+    """
+    Modify the global chain variable
+    :return:
+    """
+    global DEFINED_CHAIN
+    DEFINED_CHAIN = new_value
 
 
 def frontendAPICall(
