@@ -1,28 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2023 [Victoria Gong]
 
-// Import Flare FTSO Interface
-import "https://github.com/flare-foundation/ftso-solidity/blob/main/contracts/FtsoV2Interface.sol";
-
-contract TradeExecutor {
-    FtsoV2Interface public ftso;
-
-    constructor(address _ftsoAddress) {
-        ftso = FtsoV2Interface(_ftsoAddress);
-    }
-
-    function getVerifiedPrice(string memory symbol) public view returns (uint256) {
-        (uint256 price, ) = ftso.getCurrentPrice(symbol);
-        return price;
-    }
-
-    function executeTrade(string memory symbol, uint256 amount) public {
-        uint256 price = getVerifiedPrice(symbol);
-        // Execute trade logic using verified price
-    }
-}
-
-// Import Uniswap V3 Interfaces
+// Import Uniswap V3 Interfaces, for LFJ
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
 import "@uniswap/v3-core/contracts/libraries/FixedPoint96.sol";

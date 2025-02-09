@@ -16,20 +16,38 @@ w3 = Web3(Web3.HTTPProvider(f"https://mainnet.infura.io/v3/{infura_project_id}")
 chain_id = 1  # Ethereum Mainnet (use 43114 for Avalanche C-Chain)
 account_address = w3.eth.account.from_key(private_key).address
 
+solidity_contracts_mapper = {
+    'AirSwapFlare': {
+        'verifier_source': 'contracts/TradeVerifierFlare.sol',
+        'executor_source': 'contracts/TradeExecutorAirswap.sol',
+    },
+    'UniV3LFJ': {
+        'verifier_source': 'contracts/TradeVerifierUniV3.sol',
+        'executor_source': 'contracts/TradeExecutorLFJ.sol',
+    }
+}
 # Install Solidity compiler
 install_solc("0.8.0")
 
 # Compile the Solidity contracts
-with open("contracts/TradeVerifier.sol", "r") as f:
-    verifier_source = f.read()
+solidity_contracts = {}
+with open("contracts/TradeVerifierUniV3.sol", "r") as f:
+    solidity_contracts['UniV3LFJ']['verifier_source'] = f.read()
 
-with open("contracts/TradeExecutor.sol", "r") as f:
-    executor_source = f.read()
+with open("contracts/TradeVerifierFlare.sol", "r") as f:
+    solidity_contracts['AirSwapFlare']['verifier_source'] = f.read()
+
+with open("contracts/TradeExecutorLFJ.sol", "r") as f:
+    solidity_contracts['UniV3LFJ']['executor_source'] = f.read()
+
+with open("contracts/TradeExecutorAirswap.sol", "r") as f:
+    solidity_contracts['AirSwapFlare']['executor_source'] = f.read()
+
 
 compiled_verifier = compile_standard({
     "language": "Solidity",
     "sources": {
-        "TradeVerifier.sol": {"content": verifier_source},
+        "TradeVerifierUniV3.sol": {"content": solidity_contracts['UniV3LFJ']['verifier_source']},
     },
     "settings": {
         "outputSelection": {
@@ -41,7 +59,7 @@ compiled_verifier = compile_standard({
 compiled_executor = compile_standard({
     "language": "Solidity",
     "sources": {
-        "TradeExecutor.sol": {"content": executor_source},
+        "TradeExecutorLFG.sol": {"content": executor_source},
     },
     "settings": {
         "outputSelection": {
@@ -51,11 +69,11 @@ compiled_executor = compile_standard({
 })
 
 # Extract ABI and bytecode
-verifier_abi = compiled_verifier["contracts"]["TradeVerifier.sol"]["TradeVerifier"]["abi"]
-verifier_bytecode = compiled_verifier["contracts"]["TradeVerifier.sol"]["TradeVerifier"]["evm"]["bytecode"]["object"]
+verifier_abi = compiled_verifier["contracts"]["TradeVerifierUniV3.sol"]["TradeVerifier"]["abi"]
+verifier_bytecode = compiled_verifier["contracts"]["TradeVerifierUniV3.sol"]["TradeVerifier"]["evm"]["bytecode"]["object"]
 
-executor_abi = compiled_executor["contracts"]["TradeExecutor.sol"]["TradeExecutor"]["abi"]
-executor_bytecode = compiled_executor["contracts"]["TradeExecutor.sol"]["TradeExecutor"]["evm"]["bytecode"]["object"]
+executor_abi = compiled_executor["contracts"]["TradeExecutorLFG.sol"]["TradeExecutor"]["abi"]
+executor_bytecode = compiled_executor["contracts"]["TradeExecutorLFG.sol"]["TradeExecutor"]["evm"]["bytecode"]["object"]
 
 # Deploy TradeVerifier
 verifier_contract = w3.eth.contract(abi=verifier_abi, bytecode=verifier_bytecode)
