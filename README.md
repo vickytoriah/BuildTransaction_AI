@@ -1,14 +1,14 @@
 # Web3 dApp for On-Chain Data Retrieval and Trade Execution
 
 
-![Increasing adoption and understanding of Web3 technology, one tx at a time!](web3-dapp\resources\BuildTxAI.jpg "BuildTxAI")
+![Increasing adoption and understanding of Web3 technology, one tx at a time!](web3-dapp\blob\main\resources\BuildTxAI.jpg "BuildTxAI")
 
 [### Vision of the Project](web3-dapp/docs/Problem_Statement.md)
-```
+
 The vision of this project is to **democratize access to Web3 technologies** by creating a **low-/no-code UX tool** that simplifies the complexity of cross-chain transactions and smart contract interactions. By leveraging **Large Language Models (LLMs)** and a **diagrammatic interface**, the tool aims to bridge the gap between Web2 and Web3, enabling users with little to no technical expertise to seamlessly interact with decentralized ecosystems. The ultimate goal is to **accelerate Web3 adoption** by making it as intuitive and user-friendly as Web2 applications, while maintaining the security, transparency, and decentralization that Web3 promises.
 
 The tool empowers users to **design, validate, and execute cross-chain transactions** through a simple drag-and-drop interface, abstracting away the technical intricacies of blockchain infrastructure, smart contract deployment, and cross-chain interoperability. By combining **off-chain and on-chain actions** into a single workflow, the tool ensures that users can confidently interact with multiple blockchain networks (e.g., Ethereum, Avalanche, Flare) without needing to understand the underlying complexities.
-```
+
 ---
 
 ### What It Solves
@@ -24,42 +24,45 @@ This repository contains a Web3 decentralized application (dApp) that retrieves 
 3. Verify trade prices using Uniswap V3 or Flare FTSO's on-chain interface.
 4. Execute trades on a DEX (AirSwap or LFG).
 
-### This setup ensures secure, decentralized, and efficient data retrieval, verification, and trade execution.
+#### This setup ensures secure, decentralized, and efficient data retrieval, verification, and trade execution.
 
 ---
 
-## **Folder Structure**
-```
-web3-dapp/
-├── contracts/                     # Solidity smart contracts
-│   ├── TradeVerifierFlare.sol     # Flare FTSO price verification
-│   ├── TradeVerifierUniV3.sol     # Flare UniSwapV3 price verification
-│   ├── TradeExecutorAvalanche.sol # AirSwap trade execution
-│   ├── TradeExecutorLFG.sol       # LFG trade execution
-├── scripts/                       # Python scripts for off-chain logic
-│   ├── frontendAPI/               # Communites with the frontend and integrates a user generated input for the Exchange Mapper and trade execution
-│   │   ├── examples/*             # Examples of frontend API usage
-│   │   ├── graph_client.py        # GraphClient frontend class 
-│   │   ├── post_spec.md           # Overview of the frontend usage 
-│   ├── fetch_data.py              # Fetch on-chain data
-│   ├── get_user_input.py          # Retrieves user input from frontend diagram for Exchange mapper
-│   ├── strategy_analysis.py       # Off-chain strategy analysis
-│   ├── deploy_contracts.py        # Deploy contracts
-│   ├── execute_trade.py           # Execute trade
-├── subquery/                      # SubQuery configuration for indexing
-│   ├── project.yaml               # SubQuery configuration
-│   ├── schema.graphql             # SubQuery GraphQL schema
-│   ├── package.json               #  Node.js dependencies
-│   ├── src/
-│   │   ├── dist/                   # Compiled files
-│   │   ├── mappings/
-│   │   │   ├── index.ts           # SubQuery handler Mapper (includes handleTransaction)
-├── config/                        # Configuration files
-│   ├── secrets.json               # Store private keys securely
-│   ├── deployed_contracts.json    # Store deployed contract addresses
-├── requirements.txt               # Python dependencies
-├── .gitignore                     # Ignore sensitive files
-├── README.md                      # Project documentation
+**Folder Structure**
+  
+      ```plaintext
+        web3-dapp/
+        ├── contracts/                     # Solidity smart contracts
+        │   ├── TradeVerifierFlare.sol     # Flare FTSO price verification
+        │   ├── TradeVerifierUniV3.sol     # Flare UniSwapV3 price verification
+        │   ├── TradeExecutorAvalanche.sol # AirSwap trade execution
+        │   ├── TradeExecutorLFG.sol       # LFG trade execution
+        ├── scripts/                       # Python scripts for off-chain logic
+        │   ├── frontendAPI/               # Communites with the frontend and integrates a user generated input for the Exchange Mapper and trade execution
+        │   │   ├── examples/*             # Examples of frontend API usage
+        │   │   ├── graph_client.py        # GraphClient frontend class 
+        │   │   ├── post_spec.md           # Overview of the frontend usage 
+        │   ├── fetch_data.py              # Fetch on-chain data
+        │   ├── get_user_input.py          # Retrieves user input from frontend diagram for Exchange mapper
+        │   ├── strategy_analysis.py       # Off-chain strategy analysis
+        │   ├── deploy_contracts.py        # Deploy contracts
+        │   ├── execute_trade.py           # Execute trade
+        ├── subquery/                      # SubQuery configuration for indexing
+        │   ├── project.yaml               # SubQuery configuration
+        │   ├── schema.graphql             # SubQuery GraphQL schema
+        │   ├── package.json               #  Node.js dependencies
+        │   ├── src/
+        │   │   ├── dist/                   # Compiled files
+        │   │   ├── mappings/
+        │   │   │   ├── index.ts           # SubQuery handler Mapper (includes handleTransaction)
+        ├── config/                        # Configuration files
+        │   ├── secrets.json               # Store private keys securely
+        │   ├── deployed_contracts.json    # Store deployed contract addresses
+        ├── requirements.txt               # Python dependencies
+        ├── .gitignore                     # Ignore sensitive files
+        ├── README.md                      # Project documentation
+        ```
+
 ```
 
 ---
@@ -100,15 +103,9 @@ web3-dapp/
 |                   |       |                   |       |                   |
 +-------------------+       +-------------------+       +-------------------+
 ```
+# Product demo video
 
----
-### **Prerequisites**
-- Python 3.8 or higher.
-- Node.js (for SubQuery).
-- Solidity compiler (`solc`).
-- Web3.py library.
-- Infura project ID (for Ethereum/Avalanche node access).
-
+## [BuildTxAI Demo](https://img.yohttps://www.youtube.com/watch?v=467rjz7sJEg)
 
 ---
 ## **Disclaimer**
