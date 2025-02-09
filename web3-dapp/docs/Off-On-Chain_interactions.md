@@ -8,33 +8,21 @@ To represent the model's actions and their on-chain/off-chain characteristics, w
 ### **Nodes (Initiation Points)**
 1. **User Node**:
    - Initiates the process by triggering the dApp.
-2. [**Off-Chain Node**]():
+2. [**Off-Chain Node**](https://github.com/vickytoriah/BuildTransaction_AI/blob/7ed458393b3529c64a593e6b457dabc1358b5004/web3-dapp/docs/Off-On-Chain_interactions.md#L18-L17):
    - Executes off-chain computations and strategy analysis.
 3. **On-Chain Node**:
    - Interacts with blockchain networks (e.g., Ethereum, Avalanche).
 
----
 
-### **Off-Chain Actions**
-1. **Data Retrieval**:
-   - Fetch on-chain data (e.g., transaction data, price feeds) using APIs.
-   - Tools: Avalanche C-Chain API, Ethereum JSON-RPC, Flare FTSO.
-2. **Strategy Analysis**:
-   - Perform off-chain computations to generate trade signals.
-   - Tools: Python scripts (`strategy_analysis.py`).
-3. **SubQuery Indexing**:
-   - Index and query on-chain data for efficient retrieval.
-   - Tools: SubQuery.
 
----
 
 ### **On-Chain Actions**
 1. **Data Verification**:
-   - Verify trade prices using Uniswap V3 oracles.
-   - Tools: Solidity contracts (`TradeVerifier.sol`).
+   - Verify trade prices using Flare V3 oracles.
+   - Tools: Solidity contracts (`TradeVerifierFlare.sol`).
 2. **Trade Execution**:
    - Execute trades on a DEX (e.g., AirSwap, LFG).
-   - Tools: Solidity contracts (`TradeExecutor.sol`).
+   - Tools: Solidity contracts (`TradeExecutorAvalanche.sol`).
 
 ---
 
@@ -59,36 +47,10 @@ To represent the model's actions and their on-chain/off-chain characteristics, w
 
 ---
 
-## **Explanation of the Flowchart**
-(Low-code UI Builder: BuildTransactionAI)[http://github.com/AidanTHWong/BuildTransactionAI.git]
-[http://github.com/vickytoriah/BuildTransactions_AI.git](Cross-chain Transaction Builder: Backend)
+## **Explanation of[]() the Flowchart**
+[Low-code UI Builder: BuildTransactionAI](http://github.com/AidanTHWong/BuildTransactionAI.git)
 
-### **1. User Node**
-- The **User Node** is the initiation point where the user interacts with the dApp (e.g., through a frontend interface).
-- Actions:
-  - Triggers the dApp to start the process.
-
----
-
-### **2. Off-Chain Node**
-- The **Off-Chain Node** handles all computations and actions that do not require blockchain interaction.
-- Actions:
-  - **Data Retrieval**:
-    - Fetch on-chain data (e.g., transaction data, price feeds) using APIs like Avalanche C-Chain API, Ethereum JSON-RPC, and Flare FTSO.
-  - **Strategy Analysis**:
-    - Perform off-chain computations to analyze data and generate trade signals.
-  - **SubQuery Indexing**:
-    - Use SubQuery to index and query on-chain data for efficient retrieval.
-
----
-
-### **3. On-Chain Node**
-- The **On-Chain Node** handles all actions that require interaction with the blockchain.
-- Actions:
-  - **Data Verification**:
-    - Verify trade prices using Uniswap V3 oracles to ensure the trade is executed at the best possible price.
-  - **Trade Execution**:
-    - Execute trades on a DEX (e.g., AirSwap, LFG) using smart contracts.
+[Cross-chain Transaction Builder: Backend](http://github.com/vickytoriah/BuildTransactions_AI.git)
 
 ---
 
@@ -101,6 +63,42 @@ To represent the model's actions and their on-chain/off-chain characteristics, w
 
 ---
 
+## **Components and Actions**
+### **1. User Node**
+- The **User Node** is the initiation point where the user interacts with the dApp (e.g., through a frontend interface).
+- Actions:
+  - Triggers the dApp to start the process.
+
+---
+
+### **2. Off-Chain Node**
+- The **Off-Chain Node** handles all computations and actions that do not require blockchain interaction.
+
+### **Off-Chain Actions**
+- **Data Retrieval**:
+- Fetch on-chain data (e.g., transaction data, price feeds).
+  - Tools: **Avalanche C-Chain** API, **Ethereum** JSON-RPC, and **Flare FTSO**.
+  - Tools: Python scripts (`fetch_data.py`).
+- **Strategy Analysis**:
+  - Perform off-chain computations to analyze data and generate trade signals.
+    - Tools: Python scripts (`strategy_analysis.py`).
+- **SubQuery Indexing**:
+    - Index and query on-chain data for efficient retrieval.
+    - Tools: SubQuery.
+    - Tools: SubQuery configuration (`project.yaml`, `schema.graphql`).
+
+---
+
+### **3. On-Chain Node**
+- The **On-Chain Node** handles all actions that require interaction with the blockchain.
+### **On-Chain Actions**
+  - **Data Verification**:
+    - Verify trade prices using Uniswap V3 oracles to ensure the trade is executed at the best possible price.
+    - Tools: Avalanche C-Chain API, Ethereum JSON-RPC, Flare FTSO.
+    - Tools: Solidity contracts calls (`TradeVerifierFlare.sol`)
+  - **Trade Execution**:
+    - Execute trades on a DEX (e.g., AirSwap, LFG) using smart contracts.
+    - Tools: Solidity contracts (`TradeExecutorAvalanche.sol`).
 
 ---
 
@@ -118,5 +116,3 @@ To represent the model's actions and their on-chain/off-chain characteristics, w
 | **Trade Execution**    | On-Chain       | Executes trades on a DEX using smart contracts.                                 |
 
 ---
-
-This flowchart and categorization provide a clear overview of the model's actions and their on-chain/off-chain characteristics. Let me know if you need further clarification or adjustments!
