@@ -72,90 +72,35 @@ web3-dapp/
 
 ---
 
-## **Setup Instructions**
+### **Model Structure**
 
-### **1. Prerequisites**
+## **Visual Representation Flowchart**
+
+```plaintext
++-------------------+       +-------------------+       +-------------------+
+|   User Node       |       | Off-Chain Node    |       | On-Chain Node     |
+|                   |       |                   |       |                   |
+| 1. Trigger dApp   | ----> | 2. Data Retrieval | ----> | 3. Data Verification |
+|                   |       |                   |       |                   |
++-------------------+       +-------------------+       +-------------------+
+                                   |                           |
+                                   v                           v
++-------------------+       +-------------------+       +-------------------+
+|                   |       |                   |       |                   |
+| 4. Strategy       | <---- | 5. SubQuery       |       | 6. Trade Execution |
+|    Analysis       |       |    Indexing       |       |                   |
+|                   |       |                   |       |                   |
++-------------------+       +-------------------+       +-------------------+
+```
+
+---
+### **Prerequisites**
 - Python 3.8 or higher.
 - Node.js (for SubQuery).
 - Solidity compiler (`solc`).
 - Web3.py library.
 - Infura project ID (for Ethereum/Avalanche node access).
 
-### **2. Clone the Repository**
-```bash
-git clone https://github.com/your-username/web3-dapp.git
-cd web3-dapp
-```
-
-### **3. Set Up the Environment**
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-2. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Install Solidity compiler:
-   ```bash
-   pip install py-solc-x
-   ```
-
-### **4. Model Structure**
-
-
-### **4. Configure Secrets**
-1. Create a `config/secrets.json` file:
-   ```json
-   {
-     "private_key": "YOUR_PRIVATE_KEY",
-     "infura_project_id": "YOUR_INFURA_PROJECT_ID"
-   }
-   ```
-    - Replace `YOUR_PRIVATE_KEY` with your wallet's private key.
-    - Replace `YOUR_INFURA_PROJECT_ID` with your Infura project ID.
-
-2. Ensure `config/secrets.json` is added to `.gitignore` to avoid committing sensitive data.
-
-### **5. Deploy Contracts**
-1. Compile and deploy the contracts:
-   ```bash
-   python scripts/deploy_contracts.py
-   ```
-    - This will save the deployed contract addresses in `config/deployed_contracts.json`.
-
-### **6. Run the dApp**
-1. Fetch on-chain data:
-   ```bash
-   python scripts/fetch_data.py
-   ```
-2. Perform off-chain strategy analysis:
-   ```bash
-   python scripts/strategy_analysis.py
-   ```
-3. Execute a trade:
-   ```bash
-   python scripts/execute_trade.py
-   ```
-
-### **7. SubQuery Setup (Optional)**
-1. Install SubQuery CLI:
-   ```bash
-   npm install -g @subql/cli
-   ```
-2. Navigate to the `subquery` folder:
-   ```bash
-   cd subquery
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the SubQuery node:
-   ```bash
-   subql-node
-   ```
 
 ---
 ## **Disclaimer**
@@ -172,15 +117,13 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 ---
 
 ## **License**
-This project is licensed under the MIT License. See the [LICENSE](AI_BuildTrade/web3-dapp/LICENSE) file for details.
 
+This project is licensed under the MIT License. See the [LICENSE](BuildTransactions_AI/LICENSE) file for details.
 ---
 
 ## **Contact**
 For questions or feedback, please contact:
-- **Your Name**: [victoria.gong1@gmail.com](mailto:victoria.gong1@gmail.com)
+- **Victoria Gong**: [victoria.gong1@gmail.com](mailto:victoria.gong1@gmail.com)
 - **GitHub**: [vickytoriah](https://github.com/vickytoriah)
 
 ---
-
-This `README.md` provides a clear overview of the project, its structure, and setup instructions. Let me know if you need further adjustments!

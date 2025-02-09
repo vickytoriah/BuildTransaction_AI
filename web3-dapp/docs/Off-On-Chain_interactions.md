@@ -26,33 +26,12 @@ To represent the model's actions and their on-chain/off-chain characteristics, w
 
 ---
 
-## **Visual Representation Flowchart**
-
-```plaintext
-+-------------------+       +-------------------+       +-------------------+
-|   User Node       |       | Off-Chain Node    |       | On-Chain Node     |
-|                   |       |                   |       |                   |
-| 1. Trigger dApp   | ----> | 2. Data Retrieval | ----> | 3. Data Verification |
-|                   |       |                   |       |                   |
-+-------------------+       +-------------------+       +-------------------+
-                                   |                           |
-                                   v                           v
-+-------------------+       +-------------------+       +-------------------+
-|                   |       |                   |       |                   |
-| 4. Strategy       | <---- | 5. SubQuery       |       | 6. Trade Execution |
-|    Analysis       |       |    Indexing       |       |                   |
-|                   |       |                   |       |                   |
-+-------------------+       +-------------------+       +-------------------+
-```
-
----
 
 ## **Explanation of[]() the Flowchart**
 [Low-code UI Builder: BuildTransactionAI](http://github.com/AidanTHWong/BuildTransactionAI.git)
 
 [Cross-chain Transaction Builder: Backend](http://github.com/vickytoriah/BuildTransactions_AI.git)
 
----
 
 ## **Flow of Actions**
 
