@@ -1,6 +1,6 @@
 # Web3 dApp for On-Chain Data Retrieval and Trade Execution
 
-![Increasing adoption and understanding of Web3 technology, one tx at a time!](web3-dapp\blob\main\resources\BuildTxAI.jpg "BuildTxAI")
+![BuildTxAI](\web3-dapp\resources\BuildTxAI.jpg")
 
 ### Vision of the Project
 
