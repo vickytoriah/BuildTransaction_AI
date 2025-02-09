@@ -9,7 +9,7 @@ default_payload = {
 }
 
 # Fetch Avalanche C-Chain transaction data
-def fetch_avalanche_tx(
+def fetch_tx_data(
     tx_hash,
     payload_: dict,
     fetch_tx_dict: dict = None,
@@ -28,13 +28,12 @@ def fetch_avalanche_tx(
     
     :return:
     """
-
     
-    response = requests.post(
+    response = requests.get(
         url_,
         json=payload_,
     )
-    return response.json()
+    return response.json()[response.json().keys()[0]]
 
 
 # Fetch Ethereum transaction data
@@ -67,7 +66,8 @@ def fetch_ethereum_tx(
 def fetch_flare_ftso_price(asset):
     url = f"https://flare-api.com/ftso/{asset}/price"  # Example endpoint
     response = requests.get(url)
-    return response.json()
+    return response.json()['data']
+
 
 # Example usage
 if __name__ == "__main__":
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     )
     solidity_mapper = {}
     
-    avalanche_tx_data = fetch_avalanche_tx(
+    avalanche_tx_data = fetch_tx_data(
         fetch_tx_dict=default_payload.format("eth_getTransactionByHash"),
         tx_hash="0x...",
 

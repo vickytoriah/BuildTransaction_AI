@@ -1,11 +1,12 @@
 # Copyright (c) 2023 [Victoria Gong]
 # Licensed under the MIT License (see LICENSE for details)
-
+import requests
 import os
 from dotenv import load_dotenv
 from web3 import Web3
-import json
-from frontendAPI.graph_client import GraphClient
+from frontendAPI.graph_client import GraphClient, main as main_
+from frontendAPI.response_format import response_schema
+from fetch_data import fetch_tx_data, fetch_flare_ftso_price, fetch_ethereum_tx
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,38 +18,64 @@ frontend_domain = os.getenv("FRONTEND_DOMAIN")
 frontend_base_url = os.getenv("FRONTEND_BASE_URL")
 
 
-default_payload_dict = {
-    "jsonrpc": "2.0",
-    "method": "",  # method function to call, e.g., eth_getTransactionByHash
-    "params": [],  # tx_hash of the token pair
-    "id": 1,
-}
-
 tx_fetch_endpoints = {
-    'eth_mainnet': f'https://mainnet.infura.io/v3/{}',
-    'avax_tx': 'https://api.avax.network/ext/bc/C/rpc',
-    'flare': f"https://flare-api.com/ftso/{}/price",
-    
+    'ETH_MAINNET': f'https://mainnet.infura.io/v3/{}',
+    'AVAX/USDT': 'https://api.avax.network/ext/bc/C/rpc',
+    'FLARE': f"https://flare-api.com/ftso/{}/price",
+    'UNIV3': "https://api.solanabeach.io/v1/transactions/{}",
 }
-
-w3 = Web3(Web3.HTTPProvider(tx_fetch_endpoints['eth_mainnet'].format(infura_project_id)))
-
 
 solidity_contracts_mapper = {
     'AirSwapFlare': {
-        'fetch_tx_url': 'https://api.avax.network/ext/bc/C/rpc',
-        'payload_params': default_payload_dict.format('eth_getTransactionByHash'),
-        
-        
         'verifier_source': 'contracts/TradeVerifierFlare.sol',
-        'executor_source': 'contracts/TradeExecutorAirswap.sol',
+        'executor_source': 'contracts/TradeExecutorAvalanche.sol',
     },
-    
     'UniV3LFJ': {
         'verifier_source': 'contracts/TradeVerifierUniV3.sol',
         'executor_source': 'contracts/TradeExecutorLFJ.sol',
     },
 }
+#
+# # Connect to Ethereum/Avalanche node
+# w3 = Web3(Web3.HTTPProvider())
+
+model_specifications = {
+    'infura_project_id': infura_project_id,
+    'eth_mainnet_url': tx_fetch_endpoints['ETH_MAINNET'],
+    'eth_method': 'eth_getTransactionByHash',
+    'AVAX/USDT': {
+        'tx_hash': '',
+        'model': {
+            'AirSwapFlare': {
+                solidity_contracts_mapper['AirSwapFlare'],
+            },
+        },
+        'tx_details': {
+            'tx_fetch_url': tx_fetch_endpoints['AVAX/USDT'],
+            'tx_fetch_price': tx_fetch_endpoints['FLARE'],
+        },
+    },
+    'SOL/USDC': {
+        'tx_hash': '',
+        'model': {
+            'UNIV3LFJ': {
+                solidity_contracts_mapper['UniV3LFJ'],
+            },
+        },
+        'tx_details': {
+            'tx_fetch_url': tx_fetch_endpoints['FLARE'],
+            'tx_fetch_price': tx_fetch_endpoints['UNIV3'],
+        }
+    }
+}
+
+default_payload_dict = {
+    "jsonrpc": "2.0",
+    "method": model_specifications['eth_method'],  # method function to call, e.g., eth_getTransactionByHash
+    "params": [],  # tx_hash of the token pair
+    "id": 1,
+}
+
 
 input_params = {
     'tx_pair': 'AVAX/USDT' ,
@@ -62,38 +89,75 @@ input_params = {
 # Get User input
 # todo: finish this function and optimize the imports across the project
 def get_user_input(
-    frontend_API: str,
+    frontend_API: str = frontend_base_url,
+    frontend_domain: str = frontend_domain,
+    response_dict: dict = response_schema,
+    model_specifications_dict_: dict = model_specifications,
     
-
 ):
     """
     Get user input about Exchange and for trade execution,
     Retrieve the frontend metadata of the user input: model's diagramatic representation with token pair and execution preferences for gas and slippage
-
+    :param frontend_API:
+    :param frontend_domain:
+    :param response_dict:
+    :param model_specifications_dict_:
     :return:
     """
+    model_to_implement = {
+        'infura_project_id': infura_project_id,
+        'eth_mainnet_url': tx_fetch_endpoints['ETH_MAINNET'].format(infura_project_id),
+        'eth_method': 'eth_getTransactionByHash',
+        'tokens': '',
+        'tx_hash': '',
+        'model': {},
+    }
     
+    response_dict = frontendAPICall(
+        response_dict=response_schema,
+        frontend_API=frontend_API,
+        frontend_domain=frontend_domain,
+    )
+    if response_dict is not None:
+        token_pair = response_dict['data']['nodes']['data']['tokenPair']
+        # if 'avax' or 'avalanche' in token_pair.lower():
+            # token_pair = 'AVAX/USDT':
+        model_to_implement['model'].update(model_specifications_dict_[token_pair]['model'])
     
-    exchange_name = input_dict_params['Exchange']
-    if 'avax' or 'avalanche' in exchange_name.lower():
-    
-    if 'avax' in token_pair.lower():
-        endpoint_index = 'avax_tx'
-        contract_mapper_key = 'AirSwapFlare'
-    
-    elif 'eth' in token_pair.lower():
-        endpoint_index = 'eth_mainnet'
-        contract_mapper_key = 'UniV3LFJ'
-    else:
-        endpoint_index = 'flare'
-    
-    pass
+    model_specs = fetch_tx_details(
+        input_dict_params=model_to_implement,
+        token_pair_=token_pair,
+    )
+    return model_specs
 
-def frontendAPICall():
+
+def frontendAPICall(
+    response_dict: dict,
+    frontend_API: str,
+    frontend_domain: str,
+):
+    """
+    Fetch the frontend metadata of the user input
+    
+    :param response_dict:
+    :param frontend_API:
+    :param frontend_domain:
+    :return:
+    """
+    response_ = main_(
+        base_url=frontend_API,
+        domain_=frontend_domain,
+        request_type='GET',
+        response_schema=response_dict,
+    )
+
+    return response_
+    
 
 def fetch_tx_details(
     input_dict_params: dict,
-    token_pair: str,
+    token_pair_: str,
+    payload_d: dict = default_payload_dict,
 ):
     """
     Fetch transaction details in JSON format
@@ -101,17 +165,45 @@ def fetch_tx_details(
     :return:
     """
     
-    model_specifications = {
-        'model': 'AirSwapFlare',
-        'tx_details': {},
-        'fetch_tx_dict': {
-            'url_': tx_fetch_endpoints[]
-            'method_call': 'eth_getTransactionByHash',
-            'payload_': {},
-        },
-        'url_': tx_fetch_endpoints['avax_tx'],
-    }
+    fetch_url_tx = input_dict_params[token_pair_]['tx_details']['tx_fetch_url']
+    fetch_url_price = input_dict_params[token_pair_]['tx_details']['tx_fetch_price']
+    req_resp = fetch_tx_data(
+        url_=fetch_url_tx,
+        payload_=payload_d,
+    )
+
+    input_dict_params[token_pair_]['tx_hash'] = req_resp['hash']
+    input_dict_params[token_pair_]['flare'] = fetch_flare_ftso_price(token_pair_)
+
+    req_eth = requests.get(
+        input_dict_params['eth_mainnet_url'].format(input_dict_params['infura_project_id']),
+        json=payload_d['params'].append(input_dict_params['tx_hash']),
+    )
+    input_dict_params['tx_details']['eth'] = req_eth['tx_details']
+    req_resp_price = requests.get(
+        fetch_url_price.format(
+            req_resp['hash']
+        ),
+        json=payload_d,
+    )
+    input_dict_params[token_pair_]['price'] = req_resp_price['price']
+    return input_dict_params
     
+
+    # req_payload_updated = payload_d
+    # payload_t = default_payload_dict
+    # payload_ = {
+    #     'model': '',
+    #     'tx_details': {},
+    #     'fetch_tx_dict': {
+    #         'url_': tx_fetch_endpoints[]
+    #         'method_call': 'eth_getTransactionByHash',
+    #         'payload_': {},
+    #     },
+    #     'url_': tx_fetch_endpoints['avax_tx'],
+    # }
+    #
+    #
 
 
 if __name__ == '__main__':
