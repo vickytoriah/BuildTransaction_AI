@@ -6,7 +6,7 @@ from web3 import Web3
 from solcx import compile_standard, install_solc
 
 # Load private key and Infura project ID
-with open("config/secrets.json", "r") as f:
+with open("./config/secrets.json", "r") as f:
     secrets = json.load(f)
     private_key = secrets["private_key"]
     infura_project_id = secrets["infura_project_id"]

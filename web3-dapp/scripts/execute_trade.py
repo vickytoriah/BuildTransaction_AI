@@ -5,7 +5,7 @@ import json
 from web3 import Web3
 
 # Load private key and Infura project ID
-with open("config/secrets.json", "r") as f:
+with open("./config/secrets.json", "r") as f:
     secrets = json.load(f)
     private_key = secrets["private_key"]
     infura_project_id = secrets["infura_project_id"]
@@ -33,9 +33,17 @@ verifier_contract = w3.eth.contract(address=verifier_address, abi=verifier_abi)
 executor_contract = w3.eth.contract(address=executor_address, abi=executor_abi)
 
 # Execute trade
-def execute_trade(tokenIn, tokenOut, amountIn, amountOutMin):
+def execute_trade(
+    tokenIn,
+    tokenOut,
+    amountIn,
+    amountOutMin,
+):
     txn = executor_contract.functions.executeTrade(
-        tokenIn, tokenOut, amountIn, amountOutMin
+        tokenIn,
+        tokenOut,
+        amountIn,
+        amountOutMin
     ).buildTransaction({
         "chainId": chain_id,
         "from": account_address,
@@ -58,5 +66,5 @@ if __name__ == "__main__":
     }
     txn_receipt = execute_trade(**trade_signal)
     print(f"Trade executed: {txn_receipt}")
-if __name__ == '__main__':
+
     breakpoint()

@@ -1,0 +1,47 @@
+type Transaction @entity {
+  id: ID!                     # Unique identifier (transaction hash)
+  blockNumber: BigInt!        # Block number of the transaction
+  from: String!               # Sender address
+  to: String!                 # Receiver address
+  value: BigInt!              # Value transferred (in wei)
+  gasUsed: BigInt!            # Gas used by the transaction
+  timestamp: BigInt!          # Timestamp of the block
+}
+
+type Transfer @entity {
+  id: ID!                     # Unique identifier (log index + transaction hash)
+  from: String!               # Sender address
+  to: String!                 # Receiver address
+  value: BigInt!              # Value transferred (in wei)
+  contractAddress: String!    # Address of the token contract
+  transactionHash: String!    # Transaction hash
+  timestamp: BigInt!          # Timestamp of the block
+}
+
+type Price @entity {
+  id: ID!                     # Unique identifier (token pair + timestamp)
+  tokenPair: String!          # Token pair (e.g., AVAX/USDT)
+  price: Float!               # Price of the token pair
+  timestamp: BigInt!          # Timestamp of the price update
+}
+
+type TradeSignal @entity {
+  id: ID!                     # Unique identifier (trade signal ID)
+  tokenIn: String!            # Input token (e.g., AVAX)
+  tokenOut: String!           # Output token (e.g., USDT)
+  amountIn: BigInt!           # Amount of input token
+  amountOutMin: BigInt!       # Minimum amount of output token
+  tradeType: String!          # Trade type (e.g., buy, sell)
+  timestamp: BigInt!          # Timestamp of the trade signal
+}
+
+type TradeExecution @entity {
+  id: ID!                     # Unique identifier (transaction hash)
+  tokenIn: String!            # Input token (e.g., AVAX)
+  tokenOut: String!           # Output token (e.g., USDT)
+  amountIn: BigInt!           # Amount of input token
+  amountOut: BigInt!          # Amount of output token
+  gasFee: BigInt!             # Gas fee for the trade
+  transactionHash: String!    # Transaction hash
+  timestamp: BigInt!          # Timestamp of the trade execution
+}

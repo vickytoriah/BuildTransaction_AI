@@ -10,10 +10,13 @@ Below, is an introduction to the model's purpose, folder structure, resources us
 This repository contains a Web3 decentralized application (dApp) that retrieves on-chain data, performs off-chain strategy analysis, and executes trades on decentralized exchanges (DEXs) such as **AirSwap** and **LFG**. The dApp integrates with **Uniswap V3** for price verification and supports both **Ethereum Mainnet** and **Avalanche C-Chain**.
 
 The model's purpose is to:
-1. Retrieve on-chain data (e.g., transaction data, price feeds).
+1. Retrieve on-chain data using Avalanche C-Chain API and Flare FTSO. (e.g., transaction data, price feeds)
 2. Perform off-chain strategy analysis to generate trade signals.
-3. Verify trade prices using Uniswap V3.
+   1. Index data using SubQuery for efficient querying.
+3. Verify trade prices using Uniswap V3 or Flare FTSO's on-chain interface.
 4. Execute trades on a DEX (AirSwap or LFG).
+
+### This setup ensures secure, decentralized, and efficient data retrieval, verification, and trade execution.
 
 ---
 
@@ -21,7 +24,7 @@ The model's purpose is to:
 ```
 web3-dapp/
 ├── contracts/                     # Solidity smart contracts
-│   ├── TradeVerifier.sol          # Uniswap V3 price verification
+│   ├── TradeVerifier.sol          # Flare FTSO price verification
 │   ├── TradeExecutor.sol          # AirSwap or LFG trade execution
 ├── scripts/                       # Python scripts for off-chain logic
 │   ├── fetch_data.py              # Fetch on-chain data
@@ -33,6 +36,8 @@ web3-dapp/
 │   ├── src/
 │   │   ├── mappings/
 │   │   │   ├── handleTransaction.ts # SubQuery handler
+│   │   │   ├── index.ts            # 
+│   │   ├── schema.graphql          # SubQuery schema
 ├── config/                        # Configuration files
 │   ├── secrets.json               # Store private keys securely
 │   ├── deployed_contracts.json    # Store deployed contract addresses

@@ -1,0 +1,56 @@
+specVersion: 1.0.0
+name: web3-dapp-subquery
+version: 0.0.1
+description: SubQuery project for indexing Ethereum and Avalanche data
+repository: https://github.com/vickytoriah/BuildTransactions_AI/tree/main/web3-dapp
+
+schema:
+  file: ./schema.graphql
+
+network:
+  chainId: '1'  # Default chain ID (Ethereum Mainnet)
+
+dataSources:
+  - kind: ethereum/Runtime
+    name: ethereum
+    startBlock: 10000000  # Start indexing from block 10,000,000
+    options:
+      endpoint: https://mainnet.infura.io/v3/{YOUR_INFURA_PROJECT_ID}  # Ethereum Mainnet endpoint
+      chainId: 1  # Ethereum Mainnet chain ID
+    assets:
+      erc20:
+        file: ./erc20.abi
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleTransaction
+          kind: ethereum/TransactionHandler
+          filter:
+            to: '0x...'  # Filter transactions to a specific contract address
+        - handler: handleLog
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - '0xddf252...'  # ERC20 Transfer event signature
+
+  - kind: avalanche/Runtime
+    name: avalanche
+    startBlock: 1000000  # Start indexing from block 1,000,000
+    options:
+      endpoint: https://api.avax.network/ext/bc/C/rpc  # Avalanche C-Chain endpoint
+      chainId: 43114  # Avalanche C-Chain chain ID
+    assets:
+      erc20:
+        file: ./erc20.abi
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleTransaction
+          kind: avalanche/TransactionHandler
+          filter:
+            to: '0x...'  # Filter transactions to a specific contract address
+        - handler: handleLog
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - '0xddf252...'  # ERC20 Transfer event signature
