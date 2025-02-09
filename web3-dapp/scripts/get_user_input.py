@@ -58,23 +58,15 @@ def get_user_input(
         token_pair = response_dict['data']['nodes']['data']['tokenPair']
         
         model_to_implement['model'].update(model_specifications_dict_[token_pair]['model'])
-        global DEFINED_CHAIN
-        DEFINED_CHAIN = model_to_implement['model'].keys()[0]
+        modify_global_chain(
+            new_value=model_to_implement['model'].keys()[0],
+        )
     model_specs = fetch_tx_details(
         input_dict_params=model_to_implement,
         token_pair_=token_pair,
     )
+    
     return model_specs
-
-def modify_global_chain(
-    new_value: str,
-):
-    """
-    Modify the global chain variable
-    :return:
-    """
-    global DEFINED_CHAIN
-    DEFINED_CHAIN = new_value
 
 
 def frontendAPICall(

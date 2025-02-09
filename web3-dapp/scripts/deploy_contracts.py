@@ -6,49 +6,51 @@ from web3 import Web3
 from solcx import compile_standard, install_solc
 from global_vars_ import *
 
-# Load private key and Infura project ID
-with open("./config/secrets.json", "r") as f:
-    secrets = json.load(f)
-    private_key = secrets["private_key"]
-    infura_project_id = secrets["infura_project_id"]
+# Load private key and Infura project ID, from global_vars_
+private_key = private_key
+infura_project_id = infura_project_id
 
 # Connect to Ethereum/Avalanche node
 w3 = Web3(Web3.HTTPProvider(f"https://mainnet.infura.io/v3/{infura_project_id}"))
 chain_id = 1  # Ethereum Mainnet (use 43114 for Avalanche C-Chain)
 account_address = w3.eth.account.from_key(private_key).address
 
-solidity_contracts_mapper = {
-    'AirSwapFlare': {
-        'verifier_source': 'contracts/TradeVerifierFlare.sol',
-        'executor_source': 'contracts/TradeExecutorAvalanche.sol',
-    },
-    'UniV3LFJ': {
-        'verifier_source': 'contracts/TradeVerifierUniV3.sol',
-        'executor_source': 'contracts/TradeExecutorLFJ.sol',
-    },
-}
+# solidity_contracts_mapper = {
+#     'AirSwapFlare': {
+#         'verifier_source': 'contracts/TradeVerifierFlare.sol',
+#         'executor_source': 'contracts/TradeExecutorAvalanche.sol',
+#     },
+#     'UniV3LFJ': {
+#         'verifier_source': 'contracts/TradeVerifierUniV3.sol',
+#         'executor_source': 'contracts/TradeExecutorLFJ.sol',
+#     },
+# }
 # Install Solidity compiler
 install_solc("0.8.0")
 
 # Compile the Solidity contracts
 solidity_contracts = {}
-with open(solidity_contracts_mapper[DEFINED_CHAIN][''], "r") as f:
-    solidity_contracts['UniV3LFJ']['verifier_source'] = f.read()
+with open(solidity_contracts_mapper[DEFINED_CHAIN]['verifier_source'], "r") as f:
+    verifier_source = f.read()
 
-with open("contracts/TradeVerifierFlare.sol", "r") as f:
-    solidity_contracts['AirSwapFlare']['verifier_source'] = f.read()
+# Code example without global_vars_.py
+# with open("contracts/TradeVerifierFlare.sol", "r") as f:
+#     solidity_contracts['AirSwapFlare']['verifier_source'] = f.read()
 
-with open("contracts/TradeExecutorLFJ.sol", "r") as f:
-    solidity_contracts['UniV3LFJ']['executor_source'] = f.read()
+with open(solidity_contracts_mapper[DEFINED_CHAIN]['executor_source'], "r") as f:
+    executor_source = f.read()
 
-with open("contracts/TradeExecutorAvalanche.sol", "r") as f:
-    solidity_contracts['AirSwapFlare']['executor_source'] = f.read()
+# Code example without global_vars_.py
+# with open("contracts/TradeExecutorAvalanche.sol", "r") as f:
+#     solidity_contracts['AirSwapFlare']['executor_source'] = f.read()
 
+solidity_contracts_mapper[DEFINED_CHAIN]['executor_source']['file_name'] = solidity_contracts_mapper[DEFINED_CHAIN]['executor_source'].split('/')[1]
+solidity_contracts_mapper[DEFINED_CHAIN]['verifier_source']['file_name'] = solidity_contracts_mapper[DEFINED_CHAIN]['verifier_source'].split('/')[1]
 
 compiled_verifier = compile_standard({
     "language": "Solidity",
     "sources": {
-        "TradeVerifierUniV3.sol": {"content": solidity_contracts['UniV3LFJ']['verifier_source']},
+        solidity_contracts_mapper[DEFINED_CHAIN]['verifier_source']['file_name']: {"content": verifier_source},
     },
     "settings": {
         "outputSelection": {
@@ -60,7 +62,7 @@ compiled_verifier = compile_standard({
 compiled_executor = compile_standard({
     "language": "Solidity",
     "sources": {
-        "TradeExecutorLFG.sol": {"content": executor_source},
+        solidity_contracts_mapper[DEFINED_CHAIN]['executor_source']['file_name']: {"content": executor_source},
     },
     "settings": {
         "outputSelection": {

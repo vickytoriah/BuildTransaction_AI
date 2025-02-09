@@ -1,8 +1,20 @@
 import os
 
 
-# global DEFINED_CHAIN
+global DEFINED_CHAIN
 DEFINED_CHAIN = "AirSwapFlare"
+
+def modify_global_chain(
+    new_value: str,
+):
+    """
+    Modify the global chain variable
+    :return:
+    """
+    global DEFINED_CHAIN
+    DEFINED_CHAIN = new_value
+
+
 
 tx_fetch_endpoints = {
     'ETH_MAINNET': 'https://mainnet.infura.io/v3/{}',
