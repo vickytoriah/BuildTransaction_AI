@@ -1,0 +1,9 @@
+curl -X POST \
+  http://your-domain/api/graph-data \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "nodes": [...],
+    "connections": [...],
+    "version": "1.0",
+    "timestamp": 1234567890
+  }'

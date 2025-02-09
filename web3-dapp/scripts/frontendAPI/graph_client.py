@@ -14,6 +14,7 @@ class GraphClient:
         domain_: str = "http://localhost:3000",
         response_dict: Dict = response_schema,
     ):
+        self.json_schema = response_schema
         self.json_response = response_dict
         self.base_url = base_url
         self.domain = domain_
@@ -89,50 +90,63 @@ class GraphClient:
 async def main(
     request_type: str = 'GET',
     domain_: str = "http://localhost:3000",
-    
+    json_post_dict: Dict = None,
+    base_url: str = "{}/api/python-graph",
 ):
+    """
+    
+    :param request_type:
+    :param domain_:
+    :param json_post_dict:
+    :param base_url:
+    :return:
+    """
+    
+    client = GraphClient(
+        domain_=domain_,
+        base_url=base_url,
+    )
     if request_type.lower() == 'get':
-        client = GraphClient(
-            domain_="http://localhost:3000",
-            
-        )
         graph_data = client.get_graph_data()
         print(json.dumps(graph_data, indent=2))
+        return graph_data
     else:
-        
-        # Create sample graph data
-        sample_data = {
-            "nodes": [
-                {
-                    "id": "node-1",
-                    "type": "circle",
-                    "position": {"x": 100, "y": 200},
-                    "data": {
-                        "tokenPair": "AVAX/USDT",
-                        "tradeType": "Buy",
-                        "tradeAmount": "1 AVAX",
-                        "slippageTolerance": "1%"
+        if json_post_dict is None:
+            print('Post data is sample data, not results')
+            # Create sample graph data
+            json_post_dict = {
+                "nodes": [
+                    {
+                        "id": "node-1",
+                        "type": "circle",
+                        "position": {"x": 100, "y": 200},
+                        "data": {
+                            "tokenPair": "AVAX/USDT",
+                            "tradeType": "Buy",
+                            "tradeAmount": "1 AVAX",
+                            "slippageTolerance": "1%"
+                        }
                     }
-                }
-            ],
-            "connections": [
-                {
-                    "id": "conn-1",
-                    "sourceId": "node-1",
-                    "targetId": None
-                }
-            ],
-            "version": "1.0",
-            "timestamp": int(datetime.now().timestamp())
-        }
+                ],
+                "connections": [
+                    {
+                        "id": "conn-1",
+                        "sourceId": "node-1",
+                        "targetId": None
+                    }
+                ],
+                "version": "1.0",
+                "timestamp": int(datetime.now().timestamp())
+            }
 
-    client = GraphClient()
-    try:
-        result = await client.send_graph_data(sample_data)
-        print("Success! API Response:")
-        print(json.dumps(result, indent=2))
-    except Exception as e:
-        print(f"Failed to send graph data: {e}")
+        try:
+            result = await client.send_graph_data(
+                graph_data=json_post_dict,
+            )
+            print("Success! API Response:")
+            print(json.dumps(result, indent=2))
+        except Exception as e:
+            print(f"Failed to send graph data: {e}")
 
 # Run the examples
 if __name__ == "__main__":
