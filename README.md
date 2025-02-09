@@ -1,15 +1,9 @@
-# BuildTransaction_AI
-# BuildTransaction_AI
-Below, is an introduction to the model's purpose, folder structure, resources used, and setup instructions.
-
----
-
 # Web3 dApp for On-Chain Data Retrieval and Trade Execution
 
 ## **Introduction**
 This repository contains a Web3 decentralized application (dApp) that retrieves on-chain data, performs off-chain strategy analysis, and executes trades on decentralized exchanges (DEXs) such as **AirSwap** and **LFG**. The dApp integrates with **Uniswap V3** for price verification and supports both **Ethereum Mainnet** and **Avalanche C-Chain**.
 
-The model's purpose is to:
+### The model's purpose is to:
 1. Retrieve on-chain data using Avalanche C-Chain API and Flare FTSO. (e.g., transaction data, price feeds)
 2. Perform off-chain strategy analysis to generate trade signals.
    1. Index data using SubQuery for efficient querying.
