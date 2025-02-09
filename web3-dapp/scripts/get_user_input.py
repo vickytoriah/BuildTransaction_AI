@@ -19,9 +19,9 @@ frontend_base_url = os.getenv("FRONTEND_BASE_URL")
 
 
 tx_fetch_endpoints = {
-    'ETH_MAINNET': f'https://mainnet.infura.io/v3/{}',
+    'ETH_MAINNET': 'https://mainnet.infura.io/v3/{}',
     'AVAX/USDT': 'https://api.avax.network/ext/bc/C/rpc',
-    'FLARE': f"https://flare-api.com/ftso/{}/price",
+    'FLARE': "https://flare-api.com/ftso/{}/price",
     'UNIV3': "https://api.solanabeach.io/v1/transactions/{}",
 }
 
