@@ -1,17 +1,17 @@
 import httpx
 import requests
 import json
+import os
 import asyncio
 from typing import Dict, Optional
 from datetime import datetime
 from .response_format import response_schema
 
-
 class GraphClient:
     def __init__(
         self,
-        base_url: str = "{}/api/python-graph",
-        domain_: str = "http://localhost:3000",
+        base_url: str,
+        domain_: str,
         response_dict: Dict = response_schema,
     ):
         self.json_schema = response_schema
@@ -88,10 +88,10 @@ class GraphClient:
 
 
 async def main(
+    domain_: str,
+    base_url: str,
     request_type: str = 'GET',
-    domain_: str = "http://localhost:3000",
     json_post_dict: Dict = None,
-    base_url: str = "{}/api/python-graph",
 ):
     """
     
@@ -150,4 +150,8 @@ async def main(
 
 # Run the examples
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main(
+        domain_='your-domain',
+        base_url='http://your-domain/api/graph-data',
+        request_type='GET',
+    ))

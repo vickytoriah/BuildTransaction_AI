@@ -4,8 +4,8 @@
 import os
 from dotenv import load_dotenv
 from web3 import Web3
-import requests
 import json
+from frontendAPI.graph_client import GraphClient
 
 # Load environment variables from .env file
 load_dotenv()
@@ -13,6 +13,9 @@ load_dotenv()
 # Access environment variables
 private_key = os.getenv("PRIVATE_KEY")
 infura_project_id = os.getenv("INFURA_PROJECT_ID")
+frontend_domain = os.getenv("FRONTEND_DOMAIN")
+frontend_base_url = os.getenv("FRONTEND_BASE_URL")
+
 
 default_payload_dict = {
     "jsonrpc": "2.0",
