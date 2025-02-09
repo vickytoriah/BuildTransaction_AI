@@ -30,7 +30,7 @@ To represent the model's actions and their on-chain/off-chain characteristics, w
 ## **Explanation of[]() the Flowchart**
 [Low-code UI Builder: BuildTransactionAI](http://github.com/AidanTHWong/BuildTransactionAI.git)
 
-[Cross-chain Transaction Builder: Backend](http://github.com/vickytoriah/BuildTransactions_AI.git)
+[Cross-chain Transaction Builder: Backend](http://github.com/vickytoriah/BuildTransaction_AI.git)
 
 
 ## **Flow of Actions**
