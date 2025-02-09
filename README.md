@@ -1,9 +1,9 @@
 # Web3 dApp for On-Chain Data Retrieval and Trade Execution
-[!BuildTxAI.jpg](./web3-dapp/resources/BuildTxAI.jpg")
+[[!img]](./web3-dapp/resources/BuildTxAI.jpg])
 
 ### Vision of the Project
 
-The [vision](web3-dapp/docs/Problem_Statement.md) of this project is to **democratize access to Web3 technologies** by creating a **low-/no-code UX tool** that simplifies the complexity of cross-chain transactions and smart contract interactions. By leveraging **Large Language Models (LLMs)** and a **diagrammatic interface**, the tool aims to bridge the gap between Web2 and Web3, enabling users with little to no technical expertise to seamlessly interact with decentralized ecosystems. The ultimate goal is to **accelerate Web3 adoption** by making it as intuitive and user-friendly as Web2 applications, while maintaining the security, transparency, and decentralization that Web3 promises.
+The [vision](web3-dapp/docs/Problem_Statement.md) of this project is to **democratize access to Web3 technologies** by creating a **low-/no-code UX tool** #that simplifies the complexity of cross-chain transactions and smart contract interactions. By leveraging **Large Language Models (LLMs)** and a **diagrammatic interface**, the tool aims to bridge the gap between Web2 and Web3, enabling users with little to no technical expertise to seamlessly interact with decentralized ecosystems. The ultimate goal is to **accelerate Web3 adoption** by making it as intuitive and user-friendly as Web2 applications, while maintaining the security, transparency, and decentralization that Web3 promises.
 
 The tool empowers users to **design, validate, and execute cross-chain transactions** through a simple drag-and-drop interface, abstracting away the technical intricacies of blockchain infrastructure, smart contract deployment, and cross-chain interoperability. By combining **off-chain and on-chain actions** into a single workflow, the tool ensures that users can confidently interact with multiple blockchain networks (e.g., Ethereum, Avalanche, Flare) without needing to understand the underlying complexities.
 
