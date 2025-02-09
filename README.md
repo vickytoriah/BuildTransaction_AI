@@ -36,11 +36,12 @@ web3-dapp/
 │   ├── execute_trade.py           # Execute trade
 ├── subquery/                      # SubQuery configuration for indexing
 │   ├── project.yaml               # SubQuery configuration
+│   ├── schema.graphql             # SubQuery GraphQL schema
+│   ├── package.json               #  Node.js dependencies
 │   ├── src/
+│   │   ├── dist/                   # Compiled files
 │   │   ├── mappings/
-│   │   │   ├── handleTransaction.ts # SubQuery handler
-│   │   │   ├── index.ts            # 
-│   │   ├── schema.graphql          # SubQuery schema
+│   │   │   ├── index.ts           # SubQuery handler Mapper (includes handleTransaction)
 ├── config/                        # Configuration files
 │   ├── secrets.json               # Store private keys securely
 │   ├── deployed_contracts.json    # Store deployed contract addresses

@@ -169,3 +169,5 @@ cython_debug/
 web3-dapp/config/secrets.json
 # PyPI configuration file
 .pypirc
+web3-dapp/subquery/src/__tests__/
+data/*
