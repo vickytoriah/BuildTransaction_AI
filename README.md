@@ -1,5 +1,8 @@
 # Web3 dApp for On-Chain Data Retrieval and Trade Execution
 
+
+![Increasing adoption and understanding of Web3 technology, one tx at a time!](web3-dapp\resources\BuildTxAI.jpg "BuildTxAI")
+
 [### Vision of the Project](web3-dapp/docs/Problem_Statement.md)
 ```
 The vision of this project is to **democratize access to Web3 technologies** by creating a **low-/no-code UX tool** that simplifies the complexity of cross-chain transactions and smart contract interactions. By leveraging **Large Language Models (LLMs)** and a **diagrammatic interface**, the tool aims to bridge the gap between Web2 and Web3, enabling users with little to no technical expertise to seamlessly interact with decentralized ecosystems. The ultimate goal is to **accelerate Web3 adoption** by making it as intuitive and user-friendly as Web2 applications, while maintaining the security, transparency, and decentralization that Web3 promises.
