@@ -1,5 +1,16 @@
 # Web3 dApp for On-Chain Data Retrieval and Trade Execution
 
+[### Vision of the Project](web3-app/docs/Problem_Statement.md)
+```
+The vision of this project is to **democratize access to Web3 technologies** by creating a **low-/no-code UX tool** that simplifies the complexity of cross-chain transactions and smart contract interactions. By leveraging **Large Language Models (LLMs)** and a **diagrammatic interface**, the tool aims to bridge the gap between Web2 and Web3, enabling users with little to no technical expertise to seamlessly interact with decentralized ecosystems. The ultimate goal is to **accelerate Web3 adoption** by making it as intuitive and user-friendly as Web2 applications, while maintaining the security, transparency, and decentralization that Web3 promises.
+
+The tool empowers users to **design, validate, and execute cross-chain transactions** through a simple drag-and-drop interface, abstracting away the technical intricacies of blockchain infrastructure, smart contract deployment, and cross-chain interoperability. By combining **off-chain and on-chain actions** into a single workflow, the tool ensures that users can confidently interact with multiple blockchain networks (e.g., Ethereum, Avalanche, Flare) without needing to understand the underlying complexities.
+```
+---
+
+### What It Solves
+
+
 ## **Introduction**
 This repository contains a Web3 decentralized application (dApp) that retrieves on-chain data, performs off-chain strategy analysis, and executes trades on decentralized exchanges (DEXs) such as **AirSwap** and **LFG**. The dApp integrates with **Uniswap V3** for price verification and supports both **Ethereum Mainnet** and **Avalanche C-Chain**.
 
