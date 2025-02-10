@@ -27,41 +27,39 @@ This repository contains a Web3 decentralized application (dApp) that retrieves 
 
 ---
 
-**Folder Structure**
-  
-      ```plaintext
-        web3-dapp/
-        ├── contracts/                     # Solidity smart contracts
-        │   ├── TradeVerifierFlare.sol     # Flare FTSO price verification
-        │   ├── TradeVerifierUniV3.sol     # Flare UniSwapV3 price verification
-        │   ├── TradeExecutorAvalanche.sol # AirSwap trade execution
-        │   ├── TradeExecutorLFG.sol       # LFG trade execution
-        ├── scripts/                       # Python scripts for off-chain logic
-        │   ├── frontendAPI/               # Communites with the frontend and integrates a user generated input for the Exchange Mapper and trade execution
-        │   │   ├── examples/*             # Examples of frontend API usage
-        │   │   ├── graph_client.py        # GraphClient frontend class 
-        │   │   ├── post_spec.md           # Overview of the frontend usage 
-        │   ├── fetch_data.py              # Fetch on-chain data
-        │   ├── get_user_input.py          # Retrieves user input from frontend diagram for Exchange mapper
-        │   ├── strategy_analysis.py       # Off-chain strategy analysis
-        │   ├── deploy_contracts.py        # Deploy contracts
-        │   ├── execute_trade.py           # Execute trade
-        ├── subquery/                      # SubQuery configuration for indexing
-        │   ├── project.yaml               # SubQuery configuration
-        │   ├── schema.graphql             # SubQuery GraphQL schema
-        │   ├── package.json               #  Node.js dependencies
-        │   ├── src/
-        │   │   ├── dist/                   # Compiled files
-        │   │   ├── mappings/
-        │   │   │   ├── index.ts           # SubQuery handler Mapper (includes handleTransaction)
-        ├── config/                        # Configuration files
-        │   ├── secrets.json               # Store private keys securely
-        │   ├── deployed_contracts.json    # Store deployed contract addresses
-        ├── requirements.txt               # Python dependencies
-        ├── .gitignore                     # Ignore sensitive files
-        ├── README.md                      # Project documentation
-        ```
 
+**Folder Structure**
+```plaintext
+  web3-dapp/
+  ├── contracts/                     # Solidity smart contracts
+  │   ├── TradeVerifierFlare.sol     # Flare FTSO price verification
+  │   ├── TradeVerifierUniV3.sol     # Flare UniSwapV3 price verification
+  │   ├── TradeExecutorAvalanche.sol # AirSwap trade execution
+  │   ├── TradeExecutorLFG.sol       # LFG trade execution
+  ├── scripts/                       # Python scripts for off-chain logic
+  │   ├── frontendAPI/               # Communites with the frontend and integrates a user generated input for the Exchange Mapper and trade execution
+  │   │   ├── examples/*             # Examples of frontend API usage
+  │   │   ├── graph_client.py        # GraphClient frontend class 
+  │   │   ├── post_spec.md           # Overview of the frontend usage 
+  │   ├── fetch_data.py              # Fetch on-chain data
+  │   ├── get_user_input.py          # Retrieves user input from frontend diagram for Exchange mapper
+  │   ├── strategy_analysis.py       # Off-chain strategy analysis
+  │   ├── deploy_contracts.py        # Deploy contracts
+  │   ├── execute_trade.py           # Execute trade
+  ├── subquery/                      # SubQuery configuration for indexing
+  │   ├── project.yaml               # SubQuery configuration
+  │   ├── schema.graphql             # SubQuery GraphQL schema
+  │   ├── package.json               #  Node.js dependencies
+  │   ├── src/
+  │   │   ├── dist/                   # Compiled files
+  │   │   ├── mappings/
+  │   │   │   ├── index.ts           # SubQuery handler Mapper (includes handleTransaction)
+  ├── config/                        # Configuration files
+  │   ├── secrets.json               # Store private keys securely
+  │   ├── deployed_contracts.json    # Store deployed contract addresses
+  ├── requirements.txt               # Python dependencies
+  ├── .gitignore                     # Ignore sensitive files
+  ├── README.md                      # Project documentation
 ```
 
 ---
